@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--First View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="UAFirstViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="waW-Iy-gb6">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oO6-eO-yYX">
+                                <rect key="frame" x="20" y="28" width="560" height="250"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DE1-mq-fiX">
+                                <rect key="frame" x="20" y="328" width="560" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="560" id="czl-l0-lsX"/>
+                                    <constraint firstAttribute="height" constant="21" id="drd-HK-pz3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AhN-QO-mTk">
+                                <rect key="frame" x="180" y="360" width="400" height="157"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Shevchenko_T" translatesAutoresizingMaskIntoConstraints="NO" id="bRy-hZ-YUl">
+                                <rect key="frame" x="0.0" y="340" width="230" height="260"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lhY-ag-J7v">
+                                <rect key="frame" x="510" y="525" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="Wr1-0z-6yT"/>
+                                </constraints>
+                                <state key="normal" image="Refresh"/>
+                                <connections>
+                                    <action selector="actionNextCitation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vdk-u1-MvA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="waW-Iy-gb6" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="0co-wI-Uqg"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="AhN-QO-mTk" secondAttribute="bottom" constant="83" id="5ag-j4-NGz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lhY-ag-J7v" secondAttribute="bottom" constant="15" id="8gf-FE-w2e"/>
+                            <constraint firstItem="AhN-QO-mTk" firstAttribute="top" secondItem="waW-Iy-gb6" secondAttribute="bottom" constant="-240" id="BVl-03-sd1"/>
+                            <constraint firstItem="DE1-mq-fiX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="CAI-af-Uqb"/>
+                            <constraint firstAttribute="trailing" secondItem="waW-Iy-gb6" secondAttribute="trailing" id="E58-dq-kv6"/>
+                            <constraint firstItem="waW-Iy-gb6" firstAttribute="leading" secondItem="bRy-hZ-YUl" secondAttribute="trailing" constant="-230" id="I2M-mH-j24"/>
+                            <constraint firstItem="waW-Iy-gb6" firstAttribute="top" secondItem="oO6-eO-yYX" secondAttribute="bottom" constant="-278" id="Idn-lh-cE0"/>
+                            <constraint firstItem="oO6-eO-yYX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="MTa-Qo-nnd"/>
+                            <constraint firstAttribute="trailing" secondItem="AhN-QO-mTk" secondAttribute="trailing" constant="20" id="PB1-FN-IOm"/>
+                            <constraint firstAttribute="trailing" secondItem="DE1-mq-fiX" secondAttribute="trailing" constant="20" id="UW3-xR-PaN"/>
+                            <constraint firstItem="AhN-QO-mTk" firstAttribute="top" secondItem="DE1-mq-fiX" secondAttribute="bottom" constant="11" id="XIh-Uc-qON"/>
+                            <constraint firstItem="oO6-eO-yYX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="aS7-9T-DbS"/>
+                            <constraint firstItem="bRy-hZ-YUl" firstAttribute="top" secondItem="waW-Iy-gb6" secondAttribute="bottom" constant="-260" id="alf-A2-rhp"/>
+                            <constraint firstAttribute="trailing" secondItem="oO6-eO-yYX" secondAttribute="trailing" constant="20" id="c8Z-Kh-sL4"/>
+                            <constraint firstItem="lhY-ag-J7v" firstAttribute="top" secondItem="AhN-QO-mTk" secondAttribute="bottom" constant="8" id="cw5-2H-aRj"/>
+                            <constraint firstItem="AhN-QO-mTk" firstAttribute="leading" secondItem="bRy-hZ-YUl" secondAttribute="trailing" constant="-50" id="dUW-nm-z7O"/>
+                            <constraint firstItem="bRy-hZ-YUl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eCQ-57-TSJ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="waW-Iy-gb6" secondAttribute="bottom" id="f6U-py-dt4"/>
+                            <constraint firstItem="waW-Iy-gb6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kFB-F3-1fh"/>
+                            <constraint firstAttribute="trailing" secondItem="lhY-ag-J7v" secondAttribute="trailing" constant="30" id="oHk-ZB-7T9"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="bRy-hZ-YUl" secondAttribute="bottom" id="syU-EU-r8z"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="authorInfoTextLabel" destination="AhN-QO-mTk" id="Ezg-us-kBe"/>
+                        <outlet property="authorPhotoImageView" destination="bRy-hZ-YUl" id="H4s-M9-xIQ"/>
+                        <outlet property="authorTextLabel" destination="DE1-mq-fiX" id="H8a-gW-rbm"/>
+                        <outlet property="citationTextView" destination="oO6-eO-yYX" id="TmP-f4-YC0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="357"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Background" width="160" height="284"/>
+        <image name="Refresh" width="64" height="64"/>
+        <image name="Shevchenko_T" width="115" height="130"/>
+    </resources>
+</document>
