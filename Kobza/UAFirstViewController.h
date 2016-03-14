@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *authorInfoTextLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *authorPhotoImageView;
 
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
 - (IBAction)actionNextCitation:(id)sender;
 

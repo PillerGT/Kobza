@@ -126,10 +126,10 @@ static NSString* dbName = @"UACitation";
     
     UAAuthor* author = [self searchAuthor:citation.authCitID];
     
-    [self setCitation:citation author:author];
+    //[self setCitation:citation author:author];
+    
+    [self hideAndShow:nil delay:0.6 citation:citation author:author];
 }
-
-
 
 - (void) setCitation:(UACitation*)citation author:(UAAuthor*)author {
     
@@ -142,32 +142,71 @@ static NSString* dbName = @"UACitation";
   
 }
 
-- (void) printText:(NSString*)text delay:(float)delay {
+- (void) hideAndShow:(UILabel*)element delay:(double)delay citation:(UACitation*)citation author:(UAAuthor*)author{
     
-    __block NSString* add = @"";
-    
-    for (int i = 1; i <= [text length]; i++) {
-        
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                add = [text substringToIndex:i];
-            });
-        
-        [NSThread sleepForTimeInterval:delay];
-        
-    }
+    delay = delay/2;
+    double delay2 = delay/100;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+         [self.refreshButton setUserInteractionEnabled:NO];
+        for (NSInteger i = 100; i >= 0; i--) {
+            float alp = (float)i/100;
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [NSThread sleepForTimeInterval:delay2];
+                //element.alpha = alp;
+                self.citationTextView.alpha = alp;
+                self.authorTextLabel.alpha = alp;
+                self.authorInfoTextLabel.alpha = alp;
+                self.authorPhotoImageView.alpha = alp;
+            });
+        }
         
-        NSLog(@"%@", add);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            //element.text = @"Ой, я про другую анимацию подумал :-) Тогда все проще. Смотрите, сейчас для анимации вы задаете ее продолжительность (animImage.animationDuration = 1.0f;). А в шпаргалке есть такая заметка:";
+            self.citationTextView.text = citation.citation;
+            self.authorTextLabel.text = author.name;
+            self.authorInfoTextLabel.text = author.info;
+            self.authorPhotoImageView.image = [UIImage imageNamed:author.photo];
+        });
         
+        for (NSInteger i = 0; i <= 100; i++) {
+            float alp = (float)i/100;
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [NSThread sleepForTimeInterval:delay2];
+                //element.alpha = alp;
+                self.citationTextView.alpha = alp;
+                self.authorTextLabel.alpha = alp;
+                self.authorInfoTextLabel.alpha = alp;
+                self.authorPhotoImageView.alpha = alp;
+            });
+        }
+         [self.refreshButton setUserInteractionEnabled:YES];
     });
     
 }
 
+- (void) type:(NSString*)str withDelay:(double)delay{
+    
+    __block NSString* text = @"";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        for (NSUInteger index = 0; index < str.length; index ++) {
+            NSString * characterString = [str substringWithRange:NSMakeRange(index, 1)];
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                text = [text stringByAppendingString:characterString];
+                [NSThread sleepForTimeInterval:delay];
+                self.citationTextView.text = text;
+            });
+        }
+    });
+}
+
 #pragma mark - ActionButton
 - (IBAction)actionNextCitation:(id)sender {
+
+   
     
     [self generateNumberCitation];
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
