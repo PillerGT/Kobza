@@ -19,6 +19,7 @@
         self.citationID     = [responseSet stringForColumn:@"CITATION_ID"];
         self.authCitID      = [responseSet stringForColumn:@"AUTH_CIT_ID"];
         self.citation       = [responseSet stringForColumn:@"CITATION"];
+        self.showCitat      = [responseSet stringForColumn:@"SHOW_CITAT"];
 
     }
     return self;

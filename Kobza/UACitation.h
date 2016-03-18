@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString* citationID;
 @property (strong, nonatomic) NSString* authCitID;
 @property (strong, nonatomic) NSString* citation;
+@property (strong, nonatomic) NSString* showCitat;
 
 - (id)initWithBaseResponse:(FMResultSet *) responseSet;
 

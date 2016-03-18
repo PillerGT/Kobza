@@ -12,11 +12,14 @@
 #import "UACitation.h"
 #import "UABaseVersion.h"
 
+#define DELAY_CITAT 0.3f
+
 static NSString* dbName = @"UACitation";
 
 @interface UAFirstViewController()
 
 @property (strong, nonatomic) FMDatabase* db;
+@property (strong, nonatomic) NSString* countCitat;
 
 @end
 
@@ -30,6 +33,7 @@ static NSString* dbName = @"UACitation";
     NSString* pathDB = [self pathToDB];
     self.db = [FMDatabase databaseWithPath:pathDB];
     
+    [self countCitation];
     [self generateNumberCitation];
 }
 /*
@@ -42,14 +46,13 @@ static NSString* dbName = @"UACitation";
     [self.citationTextView removeObserver:self forKeyPath:@"contentSize"];
 }
 
-- (NSInteger) countCitation {
+- (void) countCitation {
     
     if (![self.db open]) {
         NSLog(@"No OPEN SQLITE BASE");
     }
     
     NSString* queryDB = [NSString stringWithFormat:@"SELECT * FROM BASE_INFO"];
-    
     FMResultSet *set  = [self.db executeQuery:queryDB];
     
     UABaseVersion* baseVersion;
@@ -57,9 +60,11 @@ static NSString* dbName = @"UACitation";
         
         baseVersion = [[UABaseVersion alloc] initWithBaseResponse:set];
     }
-    [self.db close];
     
-    return [baseVersion.countCitat intValue];
+    [self.db close];
+    self.countCitat = baseVersion.countCitat;
+
+    //return [baseVersion.countCitat intValue];
 }
 
 - (UAAuthor*) searchAuthor:(NSString*) authorID {
@@ -74,7 +79,6 @@ static NSString* dbName = @"UACitation";
     }
     
     NSString* queryDB = [NSString stringWithFormat:@"SELECT * FROM AUTHOR WHERE AUTHOR_ID = %@", numberStr];
-    
     FMResultSet *set  = [self.db executeQuery:queryDB];
     
     //NSMutableArray* tmpArray = [NSMutableArray array];
@@ -100,18 +104,32 @@ static NSString* dbName = @"UACitation";
 
 - (void) generateNumberCitation {
     
-    NSInteger countCitat = [self countCitation];
-    
+    int countCitat = [self.countCitat intValue];//[self countCitation];
     int numberInt = arc4random_uniform(countCitat) + 1;
+    UACitation* citation = [[UACitation alloc] init];
     
-    NSString* numberStr = [NSString stringWithFormat:@"%d", numberInt];//@"87";
+    citation = [self newCitat:numberInt];
+    
+    if (citation) {
+        
+        UAAuthor* author = [self searchAuthor:citation.authCitID];
+        [self hideAndShow:nil delay:DELAY_CITAT citation:citation author:author];
+        [self lastCitat];
+        
+    }else {
+        [self generateNumberCitation];
+    }
+}
+
+- (UACitation*) newCitat:(NSInteger) numberCitat {
+    
+    NSString* numberStr = [NSString stringWithFormat:@"%ld", (long)numberCitat];
     
     if (![self.db open]) {
         NSLog(@"No OPEN SQLITE BASE");
     }
     
     NSString* queryDB = [NSString stringWithFormat:@"SELECT * FROM CITATION WHERE CITATION_ID = %@", numberStr];
-    
     FMResultSet *set  = [self.db executeQuery:queryDB];
     
     //NSMutableArray* tmpArray = [NSMutableArray array];
@@ -120,15 +138,56 @@ static NSString* dbName = @"UACitation";
         
         citation = [[UACitation alloc] initWithBaseResponse:set];
         //[tmpArray addObject:author];
-        
     }
     [self.db close];
     
-    UAAuthor* author = [self searchAuthor:citation.authCitID];
+    if ([citation.showCitat intValue] == 0/* isEqualToString:nil]*/) {
+        
+        if (![self.db open]) {
+            NSLog(@"No OPEN SQLITE BASE");
+        }
+        NSString* queryUpdateDB = [NSString stringWithFormat:@"UPDATE CITATION SET SHOW_CITAT = %@ WHERE CITATION_ID = %@", citation.citationID, citation.citationID];
+        
+        if ([self.db executeUpdate:queryUpdateDB]) {
+            NSLog(@"Update Citat = %@", citation.citationID);
+        }else
+            NSLog(@"Fail update citat = %@", citation.citationID);
+        [self.db close];
+        
+        return citation;
+    }else
+        return nil;
+}
+
+- (void) lastCitat {
     
-    //[self setCitation:citation author:author];
+    if (![self.db open]) {
+        NSLog(@"No OPEN SQLITE BASE");
+    }
     
-    [self hideAndShow:nil delay:0.6 citation:citation author:author];
+    NSString* queryDB = [NSString stringWithFormat:@"SELECT COUNT(SHOW_CITAT) FROM CITATION"];
+    FMResultSet *set  = [self.db executeQuery:queryDB];
+    NSString* showCitat;
+
+    while ([set next]) {
+        
+        showCitat = [set stringForColumn:@"COUNT(SHOW_CITAT)"];
+    }
+    [self.db close];
+    
+    if ([self.countCitat isEqualToString:showCitat]) {
+        
+        if (![self.db open]) {
+            NSLog(@"No OPEN SQLITE BASE");
+        }
+        NSString* queryUpdateDB = [NSString stringWithFormat:@"UPDATE CITATION SET SHOW_CITAT = NULL"];
+        
+        if ([self.db executeUpdate:queryUpdateDB]) {
+            NSLog(@"Update ALL Citat = NULL");
+        }else
+            NSLog(@"Fail update ALL citat");
+        [self.db close];
+    }
 }
 
 - (void) setCitation:(UACitation*)citation author:(UAAuthor*)author {
@@ -223,7 +282,8 @@ static NSString* dbName = @"UACitation";
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDir = NO;
     BOOL dirExists = [fileManager fileExistsAtPath:dbNameDir isDirectory:&isDir];
-    NSString *dbPath = [NSString stringWithFormat:@"%@/%@.db", dbNameDir, dbName];
+    //NSString *dbPath = [NSString stringWithFormat:@"%@/%@.db", dbNameDir, dbName];
+    NSString *dbPath = [NSString stringWithFormat:@"%@/%@.sqlite", dbNameDir, dbName];
     if(dirExists && isDir) {
         BOOL dbExists = [fileManager fileExistsAtPath:dbPath];
         if(!dbExists) {
@@ -250,6 +310,7 @@ static NSString* dbName = @"UACitation";
             path = dbPath;
         }
     }
+    NSLog(@"%@", dbPath);
     return path;
 }
 
